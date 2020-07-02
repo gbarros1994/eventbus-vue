@@ -6,8 +6,11 @@
 </template>
 
 <script>
+
+import { eventBus } from './../main'
+
+
 export default {
-    // inheritAttrs: false,
     props: {
         filme: {
             type: Object,
@@ -21,11 +24,9 @@ export default {
     },
     methods: {
         selecionar() {
-            this.$emit('selecionarFilme', this.filme)
+            // this.$emit('selecionarFilme', this.filme)
+            eventBus.$emit('selecionarFilme', this.filme)
         }
-    },
-    // created() {
-    //     console.log(this.$attr)
-    // },
+    }
 }
 </script>
