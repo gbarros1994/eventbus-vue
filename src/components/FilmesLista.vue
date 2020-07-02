@@ -21,7 +21,15 @@
     <!-- coluna 2 -->
     <div class="col-4">
 
-      <FilmesListaItenInfo :filme="filmeSelecionado" />
+      <FilmesListaItenInfo 
+      v-if="!editar"
+      :filme="filmeSelecionado"
+      @editarFilme="editarFilme" />
+
+      <FilmesListaItenEditar
+      v-else
+      :filme="filmeSelecionado"
+      />
 
     </div>
 
@@ -32,9 +40,11 @@
 
 import FilmesListaIten from './FilmesListaIten.vue'
 import FilmesListaItenInfo from './FilmesListaItenInfo.vue'
+import FilmesListaItenEditar from './FilmesListaItenEditar.vue'
 
 export default {
   components: {
+    FilmesListaItenEditar,
     FilmesListaIten,
     FilmesListaItenInfo
   },
@@ -46,7 +56,8 @@ export default {
        { id: 3, titulo: 'Harry potter', ano: 2015 },
        { id: 4, titulo: 'Bob Esponja', ano: 2000 },
       ],
-      filmeSelecionado: undefined
+      filmeSelecionado: undefined,
+      editar: false
     }
   },
   methods: {
@@ -54,6 +65,10 @@ export default {
       return {
         active: this.filmeSelecionado && this.filmeSelecionado.id === filmeIterado.id
       }
+    },
+    editarFilme(filme) {
+       this.editar = true
+       this.filmeSelecionado = filme
     }
   },
 }
