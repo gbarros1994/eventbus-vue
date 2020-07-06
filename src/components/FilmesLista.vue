@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { eventBus } from './../main'
 
 import FilmesListaIten from './FilmesListaIten.vue'
 import FilmesListaItenInfo from './FilmesListaItenInfo.vue'
@@ -69,7 +70,19 @@ export default {
     editarFilme(filme) {
        this.editar = true
        this.filmeSelecionado = filme
+    },
+    atualizarFilme(filmeAtualizado) {
+      const indice = this.filmes.findIndex(filme => filme.id === filmeAtualizado.id)
+      this.filmes.splice(indice, 1, filmeAtualizado)
+      this.filmeSelecionado = undefined
+      this.editar = false
     }
   },
+  created() {
+    eventBus.$on('selecionarFilme', (filmeSelecionado) => {
+      this.filmeSelecionado = filmeSelecionado
+    })
+    eventBus.$on('atualizarFilme', this.atualizarFilme)
+  }
 }
 </script>
